@@ -10,11 +10,11 @@ interface User {
 
 export const App = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [loader, setLoader] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const readData = async () => {
-    setLoader(true);
+    setLoading(true);
     setError(false);
     try {
       const response = await axios.get<User[]>('https://jsonplaceholder.typicode.com/users');
@@ -23,7 +23,7 @@ export const App = () => {
       setError(true);
       console.error('Error fetching data:', error);
     } finally {
-      setLoader(false);
+      setLoading(false);
     }
   };
 
@@ -35,9 +35,9 @@ export const App = () => {
     <>
       <h1>APP COMPONENT</h1>
       <main>
-        {loader && <p>Cargando, espere un momento...</p>}
+        {loading && <p>Cargando, espere un momento...</p>}
         {error && <p>Hubo un error, lo sentimos...</p>}
-        {!loader && !error && users.map((user) => (
+        {!loading && !error && users.map((user) => (
           <ul key={user.id}>
             <li>Nombre: {user.name}</li>
             <li>NickName: {user.username}</li>
